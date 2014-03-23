@@ -1,6 +1,8 @@
 μnpm-fs-backend
 ====
 
+[![Build Status](https://travis-ci.org/jarofghosts/unpm-fs-backend.svg?branch=master)](https://travis-ci.org/jarofghosts/unpm-fs-backend)
+
 a static-file backend for [μnpm](https://www.npmjs.org/package/unpm)
 
 ## Example
