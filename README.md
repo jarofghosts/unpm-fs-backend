@@ -10,7 +10,7 @@ a static-file backend for [μnpm](https://www.npmjs.org/package/unpm)
 ```js
 var backend = require('unpm-fs-backend')
 
-config.backend = backend(meta_dir, user_id, tarballs_dir)
+config.backend = backend(meta_dir, user_dir, tarballs_dir)
 ```
 
 ## API
