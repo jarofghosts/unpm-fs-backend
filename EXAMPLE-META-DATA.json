@@ -1,0 +1,279 @@
+{
+    "_id": "altr",
+    "_rev": "13-51f35b7d481978efdd85d1e3737f4d0f",
+    "name": "altr",
+    "description": "README.md",
+    "dist-tags": {
+        "latest": "0.0.6"
+    },
+    "versions": {
+        "0.0.0": {
+            "name": "altr",
+            "version": "0.0.0",
+            "description": "README.md",
+            "main": "index.js",
+            "scripts": {
+                "test": "echo \"Error: no test specified\" && exit 1",
+                "start": "beefy index.js"
+            },
+            "repository": "",
+            "author": "",
+            "license": "MIT",
+            "dependencies": {
+                "through": "~2.3.4"
+            },
+            "readme": "template\n========\n\na simple template engine that generates a document fragment that will update the correct nodes when its source data changes\n",
+            "readmeFilename": "README.md",
+            "_id": "altr@0.0.0",
+            "dist": {
+                "shasum": "b654eb57a2bfbdcd74cdf242c5d90bd44f8ab770",
+                "tarball": "http://registry.npmjs.org/altr/-/altr-0.0.0.tgz"
+            },
+            "_from": ".",
+            "_npmVersion": "1.3.11",
+            "_npmUser": {
+                "name": "hayes",
+                "email": "michael@hayes.io"
+            },
+            "maintainers": [
+                {
+                    "name": "hayes",
+                    "email": "michael@hayes.io"
+                }
+            ],
+            "directories": {}
+        },
+        "0.0.1": {
+            "name": "altr",
+            "version": "0.0.1",
+            "description": "README.md",
+            "main": "index.js",
+            "scripts": {
+                "test": "echo \"Error: no test specified\" && exit 1",
+                "start": "beefy index.js"
+            },
+            "repository": {
+                "type": "git",
+                "url": "http://github.com/mghayes/tempalte"
+            },
+            "author": "",
+            "license": "MIT",
+            "dependencies": {
+                "through": "~2.3.4"
+            },
+            "readme": "template\n========\n\na simple template engine that generates a document fragment that will update the correct nodes when its source data changes\n",
+            "readmeFilename": "README.md",
+            "bugs": {
+                "url": "https://github.com/mghayes/tempalte/issues"
+            },
+            "_id": "altr@0.0.1",
+            "dist": {
+                "shasum": "c16e07531d435829da8e84bbeb690fc2411a6c41",
+                "tarball": "http://registry.npmjs.org/altr/-/altr-0.0.1.tgz"
+            },
+            "_from": ".",
+            "_npmVersion": "1.3.11",
+            "_npmUser": {
+                "name": "hayes",
+                "email": "michael@hayes.io"
+            },
+            "maintainers": [
+                {
+                    "name": "hayes",
+                    "email": "michael@hayes.io"
+                }
+            ],
+            "directories": {}
+        },
+        "0.0.2": {
+            "name": "altr",
+            "version": "0.0.2",
+            "description": "README.md",
+            "main": "index.js",
+            "scripts": {
+                "test": "echo \"Error: no test specified\" && exit 1",
+                "start": "beefy index.js"
+            },
+            "repository": {
+                "type": "git",
+                "url": "http://github.com/mghayes/tempalte"
+            },
+            "author": "",
+            "license": "MIT",
+            "dependencies": {
+                "through": "~2.3.4"
+            },
+            "readme": "template\n========\n\na simple template engine that generates a document fragment that will update the correct nodes when its source data changes\n",
+            "readmeFilename": "README.md",
+            "bugs": {
+                "url": "https://github.com/mghayes/tempalte/issues"
+            },
+            "_id": "altr@0.0.2",
+            "dist": {
+                "shasum": "139ddf57a402f7278e17051ba2d1eade6463f022",
+                "tarball": "http://registry.npmjs.org/altr/-/altr-0.0.2.tgz"
+            },
+            "_from": ".",
+            "_npmVersion": "1.3.11",
+            "_npmUser": {
+                "name": "hayes",
+                "email": "michael@hayes.io"
+            },
+            "maintainers": [
+                {
+                    "name": "hayes",
+                    "email": "michael@hayes.io"
+                }
+            ],
+            "directories": {}
+        },
+        "0.0.4": {
+            "name": "altr",
+            "version": "0.0.4",
+            "description": "README.md",
+            "main": "lib/index.js",
+            "scripts": {
+                "test": "echo \"Error: no test specified\" && exit 1",
+                "start": "beefy index.js"
+            },
+            "repository": {
+                "type": "git",
+                "url": "http://github.com/mghayes/tempalte"
+            },
+            "author": "",
+            "license": "MIT",
+            "dependencies": {
+                "through": "~2.3.4"
+            },
+            "readmeFilename": "README.md",
+            "bugs": {
+                "url": "https://github.com/mghayes/tempalte/issues"
+            },
+            "readme": "a simple template engine that generates a document fragment that will update the correct nodes when its source data changes\n",
+            "_id": "altr@0.0.4",
+            "dist": {
+                "shasum": "592d103f501fa5b5f940062787f78afc89869ffe",
+                "tarball": "http://registry.npmjs.org/altr/-/altr-0.0.4.tgz"
+            },
+            "_from": ".",
+            "_npmVersion": "1.3.11",
+            "_npmUser": {
+                "name": "hayes",
+                "email": "michael@hayes.io"
+            },
+            "maintainers": [
+                {
+                    "name": "hayes",
+                    "email": "michael@hayes.io"
+                }
+            ],
+            "directories": {}
+        },
+        "0.0.5": {
+            "name": "altr",
+            "version": "0.0.5",
+            "description": "README.md",
+            "main": "lib/index.js",
+            "scripts": {
+                "test": "echo \"Error: no test specified\" && exit 1",
+                "start": "beefy index.js"
+            },
+            "repository": {
+                "type": "git",
+                "url": "http://github.com/mghayes/altr"
+            },
+            "author": "",
+            "license": "MIT",
+            "dependencies": {
+                "through": "~2.3.4"
+            },
+            "readmeFilename": "README.md",
+            "bugs": {
+                "url": "https://github.com/mghayes/altr/issues"
+            },
+            "readme": "A simple dom aware templating enginge that only updates what it needs.\n\n##install:\n`npm install altr`\n\n#Ussage:\n\njs: \n```\nvar altr = require('altr')\n\nvar el = document.getElementById('root')\n  , template = alter(el)\n  \ntemplate.write({\n    name: \"world\"\n  , list: [1,2,3]\n})\n\n//later\ntemplate.write(new_state)\n\n```\n\nhtml:\n```\n<div id=\"root\">\n  <h1>hello, {{ name }}!</h1>\n  <ul altr-for=\"item in list\">\n    <li altr-value=\"item\"></li>\n  </ul>\n</div>\n```\n\n##Tags:\naltr currently supports these tags: `if`, `for`, `value`, `html` and more will be added soon\n\nand can be used by adding an altr attribute to an element eg. `<div altr-html=\"obj.my_html\">`\nthat element will now update its contents every time you write to the template.\n\n##Values:\nYou can also insert values into text nodes ussing the following syntax (attrubutes almost work)\n`{{ dot.path.to.value }}`\n\n##Filters:\nI have not added any filters yet, but the api is functional. `{{ user.createdAt|format }}` or `<h1 altr-value=\"user.name|capitalize\"></h1>`\nFilters are through streams, so they can be used to do async stuff, or update values over time (eg. a countdown or transition)\n\n",
+            "_id": "altr@0.0.5",
+            "dist": {
+                "shasum": "45dfdb11cade169183fd442cef5a68e843a5b0ce",
+                "tarball": "http://registry.npmjs.org/altr/-/altr-0.0.5.tgz"
+            },
+            "_from": ".",
+            "_npmVersion": "1.3.11",
+            "_npmUser": {
+                "name": "hayes",
+                "email": "michael@hayes.io"
+            },
+            "maintainers": [
+                {
+                    "name": "hayes",
+                    "email": "michael@hayes.io"
+                }
+            ],
+            "directories": {}
+        },
+        "0.0.6": {
+            "name": "altr",
+            "version": "0.0.6",
+            "description": "README.md",
+            "main": "lib/index.js",
+            "scripts": {
+                "test": "echo \"Error: no test specified\" && exit 1",
+                "start": "beefy index.js"
+            },
+            "repository": {
+                "type": "git",
+                "url": "http://github.com/mghayes/altr"
+            },
+            "author": "",
+            "license": "MIT",
+            "dependencies": {
+                "through": "~2.3.4"
+            },
+            "readmeFilename": "README.md",
+            "bugs": {
+                "url": "https://github.com/mghayes/altr/issues"
+            },
+            "readme": "A simple dom aware templating enginge that only updates what it needs.\n\n##install:\n`npm install altr`\n\n#Ussage:\n\nthis is still a work in progress so for now it is expected to be used in code that get browserified.\n\njs: \n```\nvar altr = require('altr')\n\nvar el = document.getElementById('root')\n  , template = alter(el)\n  \ntemplate.write({\n    name: \"world\"\n  , list: [1,2,3]\n})\n\n//later\ntemplate.write(new_state)\n\n```\n\nhtml:\n```\n<div id=\"root\">\n  <h1>hello, {{ name }}!</h1>\n  <ul altr-for=\"item in list\">\n    <li altr-value=\"item\"></li>\n  </ul>\n</div>\n```\n\n##Tags:\naltr currently supports these tags: `if`, `for`, `value`, `html`, `attr` and more will be added soon\n\nand can be used by adding an altr attribute to an element eg. `<div altr-html=\"obj.my_html\">`\nthat element will now update its contents every time you write to the template.\n\n##Values:\nYou can also insert values into text nodes or non altr-* attrubutes ussing the following syntax\n`{{ dot.path.to.value }}`\n\n##Filters:\nI have only written and add filter so far, but the api is functional. `{{ num|add(5) }}`\nFilters are through streams, so they can be used to do async stuff, or update values over time (eg. a countdown or transition)\n\n",
+            "_id": "altr@0.0.6",
+            "dist": {
+                "shasum": "fe2508bae141833a8da899fe5b06787806c7d927",
+                "tarball": "http://registry.npmjs.org/altr/-/altr-0.0.6.tgz"
+            },
+            "_from": ".",
+            "_npmVersion": "1.3.11",
+            "_npmUser": {
+                "name": "hayes",
+                "email": "michael@hayes.io"
+            },
+            "maintainers": [
+                {
+                    "name": "hayes",
+                    "email": "michael@hayes.io"
+                }
+            ],
+            "directories": {}
+        }
+    },
+    "readme": "template\n========\n\na simple template engine that generates a document fragment that will update the correct nodes when its source data changes\n",
+    "maintainers": [
+        {
+            "name": "hayes",
+            "email": "michael@hayes.io"
+        }
+    ],
+    "time": {
+        "modified": "2013-12-26T21:46:07.037Z",
+        "created": "2013-11-19T17:09:45.786Z",
+        "0.0.0": "2013-11-19T17:09:46.971Z",
+        "0.0.1": "2013-11-20T18:22:45.414Z",
+        "0.0.2": "2013-11-28T03:12:59.315Z",
+        "0.0.4": "2013-12-19T19:36:42.939Z",
+        "0.0.5": "2013-12-19T20:09:36.978Z",
+        "0.0.6": "2013-12-26T21:46:07.037Z"
+    },
+    "repository": {
+        "type": "git",
+        "url": "http://github.com/mghayes/altr"
+    },
+    "_attachments": {}
+}
