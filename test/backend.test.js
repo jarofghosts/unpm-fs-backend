@@ -13,6 +13,11 @@ var backend = fs_back(
   , './test/dirs/tgz'
 )
 
+var test_stream = test.createStream()
+
+test_stream.pipe(process.stdout)
+test_stream.on('end', teardown)
+
 test('set_meta stores meta-data', function(t) {
   var test_data = {test: 'data'}
 
@@ -118,7 +123,6 @@ test('get_tarball streams tgz contents', function(t) {
 
   get_tarball.on('end', function() {
     t.equal(data, expected)
-    teardown()
   })
 })
 
