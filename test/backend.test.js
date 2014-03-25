@@ -29,11 +29,13 @@ test('set_meta stores meta-data', function(t) {
     t.ok(!err, 'callback gets no error')
     t.equal(
         data
-      , JSON.stringify(test_data, null, 2), 'callback gets stringified data'
+      , JSON.stringify(test_data, null, 2)
+      , 'callback gets stringified data'
     )
     t.equal(
         fs.readFileSync('./test/dirs/meta/dummy.json').toString()
       , JSON.stringify(test_data, null, 2)
+      , 'file is written with proper content'
     )
   }
 })
@@ -47,7 +49,18 @@ test('get_meta gets meta-data', function(t) {
 
   function check_result(err, data) {
     t.ok(!err, 'callback gets no error')
-    t.deepEqual(data, expected)
+    t.deepEqual(data, expected, 'data matches what was set')
+  }
+})
+
+test('get_meta returns null on file not found', function(t) {
+  t.plan(2)
+
+  backend.get_meta('nope', check_result)
+
+  function check_result(err, data) {
+    t.ok(!err, 'callback gets no error')
+    t.strictEqual(data, null, 'data is null')
   }
 })
 
@@ -62,11 +75,13 @@ test('set_user stores user-data', function(t) {
     t.ok(!err, 'callback gets no error')
     t.equal(
         data
-      , JSON.stringify(test_data, null, 2), 'callback gets stringified data'
+      , JSON.stringify(test_data, null, 2)
+      , 'callback gets stringified data'
     )
     t.equal(
         fs.readFileSync('./test/dirs/user/dummy.json').toString()
       , JSON.stringify(test_data, null, 2)
+      , 'file is written with proper content'
     )
   }
 })
@@ -80,7 +95,18 @@ test('get_user gets user-data', function(t) {
 
   function check_result(err, data) {
     t.ok(!err, 'callback gets no error')
-    t.deepEqual(data, expected)
+    t.deepEqual(data, expected, 'user data retrieved')
+  }
+})
+
+test('get_user returns null on file not found', function(t) {
+  t.plan(2)
+
+  backend.get_user('nope', check_result)
+
+  function check_result(err, data) {
+    t.ok(!err, 'callback gets no error')
+    t.strictEqual(data, null, 'data is null')
   }
 })
 
@@ -91,13 +117,14 @@ test('set_tarball creates writable stream to tgz file', function(t) {
 
   t.plan(3)
 
-  t.ok(set_tarball.write)
-  t.equal(typeof set_tarball.write, 'function')
+  t.ok(set_tarball.write, 'return is writable-stream-like')
+  t.equal(typeof set_tarball.write, 'function', 'return has write')
 
   set_tarball.on('finish', function() {
     t.equal(
         fs.readFileSync('./test/dirs/tgz/dummy@1.2.3.tgz').toString()
       , dummy_contents
+      , 'file was written with correct contents'
     )
   })
 
@@ -112,17 +139,17 @@ test('get_tarball streams tgz contents', function(t) {
 
   t.plan(5)
 
-  t.ok(get_tarball.pipe)
-  t.ok(get_tarball.read)
-  t.equal(typeof get_tarball.pipe, 'function')
-  t.equal(typeof get_tarball.read, 'function')
+  t.ok(get_tarball.pipe, 'return is stream-like')
+  t.ok(get_tarball.read, 'return is readable-stream-like')
+  t.equal(typeof get_tarball.pipe, 'function', 'return has pipe')
+  t.equal(typeof get_tarball.read, 'function', 'return has read')
 
   get_tarball.on('data', function(chunk) {
     data += chunk
   })
 
   get_tarball.on('end', function() {
-    t.equal(data, expected)
+    t.equal(data, expected, 'streams file contents')
   })
 })
 
