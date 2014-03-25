@@ -77,7 +77,7 @@ function read_json(filename, ready) {
   fs.readFile(filename + '.json', parse_json)
 
   function parse_json(err, data) {
-    if(err) return err.code === 'ENOENT' ? ready(null, []) : ready(err)
+    if(err) return err.code === 'ENOENT' ? ready(null, null) : ready(err)
 
     try {
       return ready(null, JSON.parse(data))
