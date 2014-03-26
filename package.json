@@ -1,6 +1,6 @@
 {
   "name": "unpm-fs-backend",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "static file backend for unpm json data",
   "main": "index.js",
   "directories": {
