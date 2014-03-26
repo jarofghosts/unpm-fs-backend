@@ -40,7 +40,7 @@ User information should be an object of form:
   , email: String
   , salt: String
   , date: String
-  , password_has: String
+  , password_hash: String
 }
 ```
 
