@@ -10,24 +10,26 @@ a static-file backend for [μnpm](https://www.npmjs.org/package/unpm)
 ```js
 var backend = require('unpm-fs-backend')
 
-config.backend = backend(meta_dir, user_dir, tarballs_dir)
+config.backend = backend(metaDir, userDir, tarballsDir)
 ```
 
 ## API
 
-`backend(meta_dir, user_dir, tarballs_dir) -> Backend`
+`backend(metaDir, userDir, tarballsDir, miscDir) -> Backend`
 
-Where `meta_dir` is where to store package metadata, `user_dir` is where to
-store user data, and `tarballs_dir` is where your .tgz files live.
+Where `metaDir` is where to store package metadata, `userDir` is where to
+store user data, `tarballsDir` is where your .tgz files live, and `miscDir`
+is where any arbitrary data stored by middleware will go (using `Backend.set`
+and `Backend.get`).
 
 `Backend` is an object with the following methods:
 
-* `get_user(name, done)`
+* `getUser(name, done)`
 
 Retrieves user data for user `name` and calls `done` as a node-style callback
 (`function(err, data)`)
 
-* `set_user(name, data, done)`
+* `setUser(name, data, done)`
 
 Saves user data to `name` and calls `done` with node-style callback when
 complete
@@ -44,11 +46,16 @@ User information should be an object of form:
 }
 ```
 
-* `get_meta(name, done)`
+* `createUserStream(options)`
+
+Get a key/value stream of users, options should be of a form matching levelup's
+`createReadStream` options.
+
+* `getMeta(name, done)`
 
 Get metadata about package `name`, calls a node-style callback with data.
 
-* `set_meta(name, data, done)`
+* `setMeta(name, data, done)`
 
 Save package metadata for `name`  and calls a node-style callback when
 complete.
@@ -56,15 +63,33 @@ complete.
 Metadata should be an object that looks like
 [EXAMPLE-META-DATA.json](./EXAMPLE-META-DATA.json)
 
-* `get_tarball(name, version) -> ReadableStream`
+* `createMetaStream(options)`
+
+Get a key/value stream of metadata, options should be of a form matching
+levelup's `createReadStream` options.
+
+* `getTarball(name, version) -> ReadableStream`
 
 Returns a readable stream of the .tgz file for package `name` at `version`.
 
-* `set_tarball(name, version) -> WritableStream`
+* `setTarball(name, version) -> WritableStream`
 
 Returns a writable stream for a .tgz file for package `name` at `version`. The
 tarball must conform to the specification as outline by
 [npm-install](https://www.npmjs.org/doc/cli/npm-install.html)
+
+* `get(key, done)`
+
+Get the value of `key` from the miscellaneous key/value store.
+
+* `set(key, value, done)`
+
+Save `value` to `key` in the misc. key/value store.
+
+* `createStream(options)`
+
+Get a key/value stream for misc. data, options should be of a form matching
+levelup's `createReadStream` options.
 
 ## License
 
