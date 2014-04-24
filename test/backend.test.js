@@ -11,6 +11,7 @@ var backend = fs_back(
     './test/dirs/meta'
   , './test/dirs/user'
   , './test/dirs/tgz'
+  , './test/dirs/store'
 )
 
 var test_stream = test.createStream()
@@ -18,12 +19,12 @@ var test_stream = test.createStream()
 test_stream.pipe(process.stdout)
 test_stream.on('end', teardown)
 
-test('set_meta stores meta-data', function(t) {
+test('setMeta stores meta-data', function(t) {
   var test_data = {test: 'data'}
 
   t.plan(3)
 
-  backend.set_meta('dummy', test_data, check_file)
+  backend.setMeta('dummy', test_data, check_file)
 
   function check_file(err, data) {
     t.ok(!err, 'callback gets no error')
@@ -40,12 +41,12 @@ test('set_meta stores meta-data', function(t) {
   }
 })
 
-test('get_meta gets meta-data', function(t) {
+test('getMeta gets meta-data', function(t) {
   var expected = {test: 'data'}
 
   t.plan(2)
 
-  backend.get_meta('dummy', check_result)
+  backend.getMeta('dummy', check_result)
 
   function check_result(err, data) {
     t.ok(!err, 'callback gets no error')
@@ -53,10 +54,30 @@ test('get_meta gets meta-data', function(t) {
   }
 })
 
-test('get_meta returns null on file not found', function(t) {
+test('createMetaStream returns stream of meta-data entries', function(t) {
+  var expected = {key: 'dummy', value: '{"test":"data"}'}
+
+  var meta_stream = backend.createMetaStream()
+    , data
+
+  t.plan(3)
+
+  t.ok(meta_stream.pipe, 'return is stream-like')
+  t.equal(typeof meta_stream.pipe, 'function', 'return has pipe')
+
+  meta_stream.on('data', function(chunk) {
+    data = chunk
+  })
+
+  meta_stream.on('end', function() {
+    t.deepEqual(data, expected, 'streams entries')
+  })
+})
+
+test('getMeta returns null on file not found', function(t) {
   t.plan(2)
 
-  backend.get_meta('nope', check_result)
+  backend.getMeta('nope', check_result)
 
   function check_result(err, data) {
     t.ok(!err, 'callback gets no error')
@@ -64,12 +85,12 @@ test('get_meta returns null on file not found', function(t) {
   }
 })
 
-test('set_user stores user-data', function(t) {
+test('setUser stores user-data', function(t) {
   var test_data = {test: 'data'}
 
   t.plan(3)
 
-  backend.set_user('dummy', test_data, check_file)
+  backend.setUser('dummy', test_data, check_file)
 
   function check_file(err, data) {
     t.ok(!err, 'callback gets no error')
@@ -86,12 +107,12 @@ test('set_user stores user-data', function(t) {
   }
 })
 
-test('get_user gets user-data', function(t) {
+test('getUser gets user-data', function(t) {
   var expected = {test: 'data'}
 
   t.plan(2)
 
-  backend.get_user('dummy', check_result)
+  backend.getUser('dummy', check_result)
 
   function check_result(err, data) {
     t.ok(!err, 'callback gets no error')
@@ -99,10 +120,30 @@ test('get_user gets user-data', function(t) {
   }
 })
 
-test('get_user returns null on file not found', function(t) {
+test('createUserStream returns stream of user entries', function(t) {
+  var expected = {key: 'dummy', value: '{"test":"data"}'}
+
+  var user_stream = backend.createUserStream()
+    , data
+
+  t.plan(3)
+
+  t.ok(user_stream.pipe, 'return is stream-like')
+  t.equal(typeof user_stream.pipe, 'function', 'return has pipe')
+
+  user_stream.on('data', function(chunk) {
+    data = chunk
+  })
+
+  user_stream.on('end', function() {
+    t.deepEqual(data, expected, 'streams entries')
+  })
+})
+
+test('getUser returns null on file not found', function(t) {
   t.plan(2)
 
-  backend.get_user('nope', check_result)
+  backend.getUser('nope', check_result)
 
   function check_result(err, data) {
     t.ok(!err, 'callback gets no error')
@@ -113,7 +154,7 @@ test('get_user returns null on file not found', function(t) {
 test('set_tarball creates writable stream to tgz file', function(t) {
   var dummy_contents = 'drangus'
 
-  var set_tarball = backend.set_tarball('dummy', '1.2.3')
+  var set_tarball = backend.setTarball('dummy', '1.2.3')
 
   t.plan(3)
 
@@ -134,7 +175,7 @@ test('set_tarball creates writable stream to tgz file', function(t) {
 test('get_tarball streams tgz contents', function(t) {
   var expected = 'drangus'
 
-  var get_tarball = backend.get_tarball('dummy', '1.2.3')
+  var get_tarball = backend.getTarball('dummy', '1.2.3')
     , data = ''
 
   t.plan(5)
@@ -152,6 +193,73 @@ test('get_tarball streams tgz contents', function(t) {
     t.equal(data, expected, 'streams file contents')
   })
 })
+
+test('set stores arbitrary data', function(t) {
+  var test_data = {test: 'data'}
+
+  t.plan(3)
+
+  backend.set('dummy', test_data, check_file)
+
+  function check_file(err, data) {
+    t.ok(!err, 'callback gets no error')
+    t.equal(
+        data
+      , JSON.stringify(test_data, null, 2)
+      , 'callback gets stringified data'
+    )
+    t.equal(
+        fs.readFileSync('./test/dirs/store/dummy.json').toString()
+      , JSON.stringify(test_data, null, 2)
+      , 'file is written with proper content'
+    )
+  }
+})
+
+test('get gets arbitrary data', function(t) {
+  var expected = {test: 'data'}
+
+  t.plan(2)
+
+  backend.get('dummy', check_result)
+
+  function check_result(err, data) {
+    t.ok(!err, 'callback gets no error')
+    t.deepEqual(data, expected, 'arbitrary data retrieved')
+  }
+})
+
+test('createStream returns stream of store entries', function(t) {
+  var expected = {key: 'dummy', value: '{"test":"data"}'}
+
+  var get_stream = backend.createStream()
+    , data
+
+  t.plan(3)
+
+  t.ok(get_stream.pipe, 'return is stream-like')
+  t.equal(typeof get_stream.pipe, 'function', 'return has pipe')
+
+  get_stream.on('data', function(chunk) {
+    data = chunk
+  })
+
+  get_stream.on('end', function() {
+    t.deepEqual(data, expected, 'streams entries')
+  })
+})
+
+test('get returns null on file not found', function(t) {
+  t.plan(2)
+
+  backend.get('nope', check_result)
+
+  function check_result(err, data) {
+    t.ok(!err, 'callback gets no error')
+    t.strictEqual(data, null, 'data is null')
+  }
+})
+
 
 function teardown() {
   rmrf.sync('./test/dirs')
