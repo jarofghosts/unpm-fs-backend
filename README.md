@@ -22,7 +22,7 @@ store user data, `tarballsDir` is where your .tgz files live, and `miscDir`
 is where any arbitrary data stored by middleware will go (using `Backend.set`
 and `Backend.get`).
 
-`Backend` is an object with the following methods:
+`Backend` is an Event Emitter with the following methods:
 
 * `getUser(name, done)`
 
@@ -46,6 +46,9 @@ User information should be an object of form:
 }
 ```
 
+Emits `setUser(name, data, previousData)` where `previousData` is the data
+`name` had before being set (`null` in the case of no previous data).
+
 * `createUserStream(options)`
 
 Get a key/value stream of users, options should be of a form matching levelup's
@@ -57,8 +60,10 @@ Get metadata about package `name`, calls a node-style callback with data.
 
 * `setMeta(name, data, done)`
 
-Save package metadata for `name`  and calls a node-style callback when
+Save package metadata for `name` and calls a node-style callback when
 complete.
+
+Emits `setMeta(name, data, previousData)`
 
 Metadata should be an object that looks like
 [EXAMPLE-META-DATA.json](./EXAMPLE-META-DATA.json)
@@ -85,6 +90,8 @@ Get the value of `key` from the miscellaneous key/value store.
 * `set(key, value, done)`
 
 Save `value` to `key` in the misc. key/value store.
+
+Emits `set(key, value, previousValue)`
 
 * `createStream(options)`
 
