@@ -3,7 +3,6 @@ var EE = require('events').EventEmitter
   , fs = require('fs')
 
 var jrs = require('json-readdir-stream')
-  , through = require('through')
   , mkdirp = require('mkdirp')
 
 var normal = path.normalize
