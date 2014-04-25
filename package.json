@@ -32,7 +32,6 @@
   },
   "dependencies": {
     "mkdirp": "0.3.5",
-    "through": "2.3.4",
     "json-readdir-stream": "0.0.2"
   }
 }
