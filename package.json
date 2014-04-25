@@ -27,13 +27,12 @@
   },
   "homepage": "https://github.com/jarofghosts/unpm-fs-backend",
   "devDependencies": {
-    "tape": "2.11.0",
-    "rimraf": "2.2.6"
+    "rimraf": "2.2.6",
+    "unpm-backend-test": "0.0.2"
   },
   "dependencies": {
     "mkdirp": "0.3.5",
     "through": "2.3.4",
-    "json-readdir-stream": "0.0.2",
-    "unpm-backend-test": "0.0.2"
+    "json-readdir-stream": "0.0.2"
   }
 }
