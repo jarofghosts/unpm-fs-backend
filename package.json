@@ -31,7 +31,8 @@
     "unpm-backend-test": "0.0.2"
   },
   "dependencies": {
+    "json-readdir-stream": "0.0.2",
     "mkdirp": "0.3.5",
-    "json-readdir-stream": "0.0.2"
+    "through": "^2.3.6"
   }
 }

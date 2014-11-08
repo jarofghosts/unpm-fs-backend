@@ -1,8 +1,10 @@
 var EE = require('events').EventEmitter
+  , qs = require('querystring')
   , path = require('path')
   , fs = require('fs')
 
 var jrs = require('json-readdir-stream')
+  , through = require('through')
   , mkdirp = require('mkdirp')
 
 var normal = path.normalize
@@ -48,8 +50,9 @@ function fs_back(_meta_dir, _user_dir, _tarballs_dir, _store_dir) {
   return backend
 
   function get(dir) {
-    return function get_data(key, _done) {
-      var done = _done || noop
+    return function get_data(_key, _done) {
+      var key = qs.escape(_key)
+        , done = _done || noop
 
       read_json(join(dir, key), done)
     }
@@ -57,13 +60,14 @@ function fs_back(_meta_dir, _user_dir, _tarballs_dir, _store_dir) {
 
   function stream_all(dir) {
     return function stream_data(options) {
-      return jrs(dir, options)
+      return jrs(dir, options).pipe(unescape_stream(options))
     }
   }
 
   function set(dir, event_name) {
-    return function set_data(key, data, _done) {
-      var done = _done || noop
+    return function set_data(_key, data, _done) {
+      var key = qs.escape(_key)
+        , done = _done || noop
         , old_data
 
       get(dir)(key, got_old)
@@ -86,8 +90,9 @@ function fs_back(_meta_dir, _user_dir, _tarballs_dir, _store_dir) {
   }
 
   function remove(dir, event_name) {
-    return function remove_data(key, _done) {
-      var done = _done || noop
+    return function remove_data(_key, _done) {
+      var key = qs.escape(_key)
+        , done = _done || noop
         , old_data
 
       get(dir)(key, got_old)
@@ -111,18 +116,18 @@ function fs_back(_meta_dir, _user_dir, _tarballs_dir, _store_dir) {
 
   function get_tarball(name, version) {
     return fs.createReadStream(
-        join(tarballs_dir, name + '@' + version + '.tgz')
+        join(tarballs_dir, qs.escape(name) + '@' + version + '.tgz')
     )
   }
 
   function set_tarball(name, version) {
     return fs.createWriteStream(
-        join(tarballs_dir, name + '@' + version + '.tgz')
+        join(tarballs_dir, qs.escape(name) + '@' + version + '.tgz')
     )
   }
 
   function remove_tarball(name, version, callback) {
-    fs.unlink(join(tarballs_dir, name + '@' + version + '.tgz'), callback)
+    fs.unlink(join(tarballs_dir, qs.escape(name) + '@' + version + '.tgz'), callback)
   }
 }
 
@@ -156,4 +161,18 @@ function read_json(filename, ready) {
   }
 }
 
+function unescape_stream(options) {
+  if(options && !options.keys && typeof options.keys !== 'undefined') {
+    return through()
+  }
+
+  return through(function unescape(data) {
+    if(typeof data === 'object') {
+      data.key = qs.unescape(data.key)
+      return this.queue(data)
+    }
+
+    return this.queue(qs.unescape(data))
+  })
+}
 function noop() {}
