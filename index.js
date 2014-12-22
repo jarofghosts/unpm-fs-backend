@@ -12,95 +12,95 @@ var normal = path.normalize
 
 var CWD = process.cwd()
 
-module.exports = fs_back
+module.exports = fsBack
 
-function fs_back(_meta_dir, _user_dir, _tarballs_dir, _store_dir) {
+function fsBack(_metaDir, _userDir, _tarballsDir, _storeDir) {
   var backend = new EE
-    , tarballs_dir
-    , store_dir
-    , user_dir
-    , meta_dir
+    , tarballsDir
+    , storeDir
+    , userDir
+    , metaDir
 
-  tarballs_dir = _tarballs_dir ? normal(_tarballs_dir) : join(CWD, 'tarballs')
-  store_dir = _store_dir ? normal(_store_dir) : join(CWD, 'store')
-  user_dir = _user_dir ? normal(_user_dir) : join(CWD, 'users')
-  meta_dir = _meta_dir ? normal(_meta_dir) : join(CWD, 'meta')
+  tarballsDir = _tarballsDir ? normal(_tarballsDir) : join(CWD, 'tarballs')
+  storeDir = _storeDir ? normal(_storeDir) : join(CWD, 'store')
+  userDir = _userDir ? normal(_userDir) : join(CWD, 'users')
+  metaDir = _metaDir ? normal(_metaDir) : join(CWD, 'meta')
 
-  mkdirp.sync(tarballs_dir)
-  mkdirp.sync(store_dir)
-  mkdirp.sync(user_dir)
-  mkdirp.sync(meta_dir)
+  mkdirp.sync(tarballsDir)
+  mkdirp.sync(storeDir)
+  mkdirp.sync(userDir)
+  mkdirp.sync(metaDir)
 
-  backend.getUser = get(user_dir)
-  backend.setUser = set(user_dir, 'setUser')
-  backend.removeUser = remove(user_dir, 'removeUser')
-  backend.createUserStream = stream_all(user_dir)
-  backend.getMeta = get(meta_dir)
-  backend.setMeta = set(meta_dir, 'setMeta')
-  backend.removeMeta = remove(meta_dir, 'removeMeta')
-  backend.createMetaStream = stream_all(meta_dir)
-  backend.get = get(store_dir)
-  backend.set = set(store_dir, 'set')
-  backend.remove = remove(store_dir, 'remove')
-  backend.createStream = stream_all(store_dir)
-  backend.getTarball = get_tarball
-  backend.setTarball = set_tarball
-  backend.removeTarball = remove_tarball
+  backend.getUser = get(userDir)
+  backend.setUser = set(userDir, 'setUser')
+  backend.removeUser = remove(userDir, 'removeUser')
+  backend.createUserStream = streamAll(userDir)
+  backend.getMeta = get(metaDir)
+  backend.setMeta = set(metaDir, 'setMeta')
+  backend.removeMeta = remove(metaDir, 'removeMeta')
+  backend.createMetaStream = streamAll(metaDir)
+  backend.get = get(storeDir)
+  backend.set = set(storeDir, 'set')
+  backend.remove = remove(storeDir, 'remove')
+  backend.createStream = streamAll(storeDir)
+  backend.getTarball = getTarball
+  backend.setTarball = setTarball
+  backend.removeTarball = removeTarball
 
   return backend
 
   function get(dir) {
-    return function get_data(_key, _done) {
+    return function getData(_key, _done) {
       var key = qs.escape(_key)
         , done = _done || noop
 
-      read_json(join(dir, key), done)
+      readJson(join(dir, key), done)
     }
   }
 
-  function stream_all(dir) {
-    return function stream_data(options) {
-      return jrs(dir, options).pipe(unescape_stream(options))
+  function streamAll(dir) {
+    return function streamData(options) {
+      return jrs(dir, options).pipe(unescapeStream(options))
     }
   }
 
-  function set(dir, event_name) {
-    return function set_data(_key, data, _done) {
+  function set(dir, eventName) {
+    return function setData(_key, data, _done) {
       var key = qs.escape(_key)
         , done = _done || noop
-        , old_data
+        , oldData
 
-      get(dir)(key, got_old)
+      get(dir)(key, gotOld)
 
-      function got_old(err, old) {
+      function gotOld(err, old) {
         if(err) return done(err)
 
-        old_data = old
+        oldData = old
 
-        write_json(join(dir, key), data, saved_new)
+        writeJson(join(dir, key), data, savedNew)
       }
 
-      function saved_new(err, data) {
+      function savedNew(err, data) {
         if(err) return done(err)
 
-        done(null, data, old_data)
-        backend.emit(event_name, key, data, old_data)
+        done(null, data, oldData)
+        backend.emit(eventName, key, data, oldData)
       }
     }
   }
 
-  function remove(dir, event_name) {
-    return function remove_data(_key, _done) {
+  function remove(dir, eventName) {
+    return function removeData(_key, _done) {
       var key = qs.escape(_key)
         , done = _done || noop
-        , old_data
+        , oldData
 
-      get(dir)(key, got_old)
+      get(dir)(key, gotOld)
 
-      function got_old(err, data) {
+      function gotOld(err, data) {
         if(err) return done(err)
 
-        old_data = data
+        oldData = data
 
         fs.unlink(join(dir, key + '.json'), removed)
       }
@@ -108,49 +108,49 @@ function fs_back(_meta_dir, _user_dir, _tarballs_dir, _store_dir) {
       function removed(err) {
         if(err) return done(err)
 
-        done(null, old_data)
-        backend.emit(event_name, key, old_data)
+        done(null, oldData)
+        backend.emit(eventName, key, oldData)
       }
     }
   }
 
-  function get_tarball(name, version) {
+  function getTarball(name, version) {
     return fs.createReadStream(
-        join(tarballs_dir, qs.escape(name) + '@' + version + '.tgz')
+        join(tarballsDir, qs.escape(name) + '@' + version + '.tgz')
     )
   }
 
-  function set_tarball(name, version) {
+  function setTarball(name, version) {
     return fs.createWriteStream(
-        join(tarballs_dir, qs.escape(name) + '@' + version + '.tgz')
+        join(tarballsDir, qs.escape(name) + '@' + version + '.tgz')
     )
   }
 
-  function remove_tarball(name, version, callback) {
-    fs.unlink(join(tarballs_dir, qs.escape(name) + '@' + version + '.tgz'), callback)
+  function removeTarball(name, version, callback) {
+    fs.unlink(join(tarballsDir, qs.escape(name) + '@' + version + '.tgz'), callback)
   }
 }
 
-function write_json(filename, data, ready) {
+function writeJson(filename, data, ready) {
   try {
-    var json_data = JSON.stringify(data, null, 2)
+    var jsonData = JSON.stringify(data, null, 2)
   } catch(e) {
     return ready(e)
   }
 
-  fs.writeFile(filename + '.json', json_data, write_done)
+  fs.writeFile(filename + '.json', jsonData, writeDone)
 
-  function write_done(err) {
+  function writeDone(err) {
     if(err) return ready(err)
 
     ready(null, data)
   }
 }
 
-function read_json(filename, ready) {
-  fs.readFile(filename + '.json', parse_json)
+function readJson(filename, ready) {
+  fs.readFile(filename + '.json', parseJson)
 
-  function parse_json(err, data) {
+  function parseJson(err, data) {
     if(err) return err.code === 'ENOENT' ? ready(null, null) : ready(err)
 
     try {
@@ -161,7 +161,7 @@ function read_json(filename, ready) {
   }
 }
 
-function unescape_stream(options) {
+function unescapeStream(options) {
   if(options && !options.keys && typeof options.keys !== 'undefined') {
     return through()
   }
